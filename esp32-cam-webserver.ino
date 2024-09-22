@@ -281,6 +281,16 @@ void setLamp(int newVal) {
 #endif
 }
 
+void blink(uint16_t reps, int intensity, uint16_t delayMs) {
+  Serial.printf("reps:%d, intensity: %d, delayMs: %d\n", reps, intensity, delayMs);
+  for (auto i = 0; i < reps; ++i) {
+    setLamp(intensity);
+    delay(delayMs);
+    setLamp(0);
+    delay(delayMs);
+  }
+}
+
 void printLocalTime(bool extraData=false) {
     struct tm timeinfo;
     if(!getLocalTime(&timeinfo)){
@@ -787,6 +797,8 @@ void setup() {
         #else
             debugOff();
         #endif
+
+        blink(10, 5, 100);
     } else {
         Serial.printf("\r\nCamera unavailable due to initialisation errors.\r\n\r\n");
     }
